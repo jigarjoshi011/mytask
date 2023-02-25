@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View</title>
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        table {
+            margin: 15px;
+            border: 1px solid black;
+
+        }
+
+        td {
+            padding: 5px;
+            border: 1px solid black;
+            background-color: rgb(160, 255, 149);
+        }
+
+        th {
+            padding: 5px;
+            border: 1px solid black;
+            background-color: rgb(250, 173, 117);
+        }
+
+        input {
+            width: 80%;
+            margin: 5px;
+            padding: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form action="">
+
+        <table>
+            <tr>
+                <th>#ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>City</th>
+                <th>A/c Number</th>
+                <th>Addhar No</th>
+                <th>Save</th>
+            </tr>
+
+
+            <tbody id="my_data">
+
+
+            </tbody>
+
+
+        </table>
+        <div class="linkss">
+
+            <a id="Link">Add Row</a>
+        </div>
+
+        <div>
+            <a href="">Save All</a>
+        </div>
+
+    </form>
+
+</body>
+<script>
+
+    for (let i = 0; i < 1; i++) {
+        let content = document.getElementById('Link').addEventListener('click', () => {
+            document.getElementById('my_data').insertAdjacentHTML('afterbegin', `   <div id="my_data1">
+                
+                <tr id="Table_row1"> 
+                    <td><input type="text" value="${i}" name="id${i}" id="input1" readonly></td>
+                    <td><input type="text" name="first_name${i}" id="input1"></td>
+                    <td><input type="text" name="last_name${i}" id="input2"></td>
+                    <td><input type="text" name="city${i}" id="input3"></td>
+                    <td><input type="text" name="A/c_no${i}" id="input4"></td>
+                    <td><input type="text" name="addhar_no${i}" id="input5"></td>
+                    <td><a href="/save/${++i}">Save</a></td>
+            </tr>
+        </div>`)
+        })
+    }
+
+    // content.appendChild('Table_data')
+
+    // let list  = document.getElementById('Table_row')
+    // let content = ``
+    // document.getElementById('Link').addEventListener('click',()=>{
+    //     content+=`<tr>
+    //                 <td><input type="text" name="input1" id="input1"></td>
+    //                 <td><input type="text" name="input2" id="input2"></td>
+    //                 <td><input type="text" name="input3" id="input3"></td>
+    //                 <td><input type="text" name="input4" id="input4"></td>
+    //                 <td><input type="text" name="input5" id="input5"></td>
+    //                 <td><a href="">Save</a></td>
+    //             </tr>`
+    // })
+
+    // list.innerHTML+=content
+
+</script>
+
+</html>
