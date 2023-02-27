@@ -6,98 +6,288 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .glyphicon,
+        .glyphicon-edit {
+            width: 25px;
+            height: 25px;
+        }
+    </style>
 </head>
 
+
 <body>
-    <table class="table table-hover">
-        <tbody id="my_data">
-
-            <tr>
-                <th>#ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-
-                <th>City</th>
-                <th>A/c Number</th>
-                <th>Addhar Number</th>
-                <th>Store Data</th>
-
-            </tr>
-
-            <% for(let i=0; i<ans.length; i++) { %>
-                <tr id="t<%= ans[i].id %>">
-                    <th scope="row">
-                        <input type="text" name=" <%`id${i}`%>" value="<%= ans[i].id %>" readonly>
-
-                    </th>
-
-                    <td>
-                        <input type="text" name="<%`fname${i}`%>" value="<%= ans[i].fname %>">
-
-
-                    </td>
-                    <td><input type="text" name="<%`lname${i}`%>" value="<%= ans[i].lname %>"> </td>
-                    <td>
-                        <input type="text" name="<%`city${i}`%>" value="<%= ans[i].city %>">
-                    </td>
-                    <td>
-                        <input type="text" name="<%`acc_no${i}`%>" value="<%= ans[i].account_no%>">
-                    </td>
-                    <td>
-                        <input type="text" name="<%`addhar_no${i}`%>" value="<%= ans[i].addhar_no %>">
-                    </td>
-
-                    <td><span><i id="<%= ans[i].id %>" class="bi bi-eye-fill" onclick="handleSave(this)">Save</i></span>
-                    </td>
-                </tr>
-                <% } %>
-                <div class="linkss">
-    
-                    <a id="Link" onclick="addRow()">Add Row</a>
-               
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">23DEV049</a>
             </div>
-        </body>
+            <ul class="nav navbar-nav ">
+                <!-- <li class="active"><a href="#">Home</a></li> -->
+                <li><a id="Link" onclick="addRow()">Add Row</a>/li>
+                <li> <a id="SaveAll" onclick="saveAll()">Save All</a></li>
+            </ul>
+            <!-- <button class="btn btn-danger navbar-btn">Button</button> -->
+        </div>
+    </nav>
 
-        </tbody>
-    </table>
-   
+    <div class="container text-center">
+
+
+        <table class="table table-hover table-bordered table-striped  ">
+            <tbody id="my_data">
+
+                <tr>
+                    <th>#ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+
+                    <th>City</th>
+                    <th>A/c Number</th>
+                    <th>Addhar Number</th>
+                    <th>Edit</th>
+                    <th>Store Data</th>
+
+                </tr>
+
+
+                <% for(let i=0; i<ans.length; i++) { %>
+
+
+                    <tr id="t<%= ans[i].id %>">
+                        <th scope="row">
+                            <input type="text" disabled="true" name=" <%`id${i}`%>" value="<%= ans[i].id %>" readonly>
+
+                        </th>
+
+                        <td>
+                            <input type="text" disabled="true" name="<%`fname${i}`%>" value="<%= ans[i].fname %>">
+
+
+                        </td>
+                        <td><input type="text" disabled="true" name="<%`lname${i}`%>" value="<%= ans[i].lname %>"> </td>
+                        <td>
+                            <input type="text" disabled="true" name="<%`city${i}`%>" value="<%= ans[i].city %>">
+                        </td>
+                        <td>
+                            <input type="text" disabled="true" name="<%`acc_no${i}`%>" value="<%= ans[i].account_no%>">
+                        </td>
+                        <td>
+                            <input type="text" disabled="true" name="<%`addhar_no${i}`%>"
+                                value="<%= ans[i].addhar_no %>">
+                        </td>
+                        <td>
+                            <a id="edit" class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                        </td>
+
+
+                        <td><span><i id="<%= ans[i].id %>" class="btn btn-primary"
+                                    onclick="handleUpdate(`<%= ans[i].id %>`)">Update</i></span>
+                        </td>
+                    </tr>
+
+                    <% } %>
+
+            </tbody>
+
+
+    </div>
+
+
+
+</body>
+
+</tbody>
+</table>
+
 <script>
-    async function handleSave(ele) {
-        console.log("i am here");
-        const id = ele.id
-        console.log(id);
-        alert("Do you want to save data ?")
-        const save_req = await fetch(`http://localhost:5003/save/${id}`);
-        var resSave = await save_req.json();
-        console.log(resSave);
 
-        if (resSave) {
-            alert("Your Data is Stored Successfully ")
-        }
+    function handleUpdate(ele) {
+        console.log("i am here");
+        const id = parseInt(ele)
+        console.log(id);
+        const up_arr = []
+        const Update = document.getElementById(ele);
+        console.log(Update);
+        const row = Update.parentNode.parentNode.parentNode;
+        console.log(row);
+        const allInputs = row.querySelectorAll("input[type=text]");
+        console.log(allInputs);
+        Update.addEventListener('click', async () => {
+
+            allInputs.forEach(input => {
+                // console.log(input.value);
+                up_arr.push(input.value)
+
+            })
+            console.log(up_arr);
+
+            let msg = confirm("Do you want to Update data ?");
+            if (msg && up_arr) {
+                console.log("i am here");
+
+                const save_req = await fetch(`http://localhost:5003/update/${id}`, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        data: up_arr
+
+                    })
+
+                });
+                var resSave = await save_req.json();
+                console.log(resSave);
+
+                if (resSave) {
+                    alert("Your Data is Updated Successfully ")
+                    location.reload(true)
+                }
+            }
+        })
+
+
+
+
     }
 
     async function addRow() {
         console.log("he bab");
-        const response = await fetch('/getId');
-        const data = await response.json();
-        console.log(data);
-        const id = data.ans[0].id + 1;
-        console.log("i got data");
-        let content = `<tr id="Table_row1"> 
-                    <td><input type="text" value="${id}" name="id${id}" id="input1" readonly></td>
+        // const response = await fetch('/getId');
+        // const data = await response.json();
+        // console.log(data);
+        // const id = data.ans[0].id + 1;
+        let id = 0
+        // console.log("i got data");
+        let content = `
+                    <td><input type="text"  name="id${++id}" id="input1" readonly></td>
                     <td><input type="text" name="first_name${id}" id="input1"></td>
                     <td><input type="text" name="last_name${id}" id="input2"></td>
                     <td><input type="text" name="city${id}" id="input3"></td>
                     <td><input type="text" name="A/c_no${id}" id="input4"></td>
                     <td><input type="text" name="addhar_no${id}" id="input5"></td>
-                    <<p class="btn btn-success" onclick="handleSave(this)">save</p>
-            </tr>`;
+                    <p class="btn btn-success" class="savedata" id="save" onclick="savedata()">save</p>`;
 
-        const div = document.createElement('div');
+        const div = document.createElement('tr');
+        // div.style.display="flex"
         div.innerHTML = content;
-          let tbody = document.getElementById('my_data')
-        tbody.appendChild(div)
+        let tbody = document.getElementById('my_data')
 
+        tbody.appendChild(div)
+    
+
+    }
+
+
+    const editme = document.querySelectorAll("#edit");
+    editme.forEach(items => {
+        items.addEventListener('click', async () => {
+            const row = items.parentNode.parentNode;
+            // console.log(row);
+            const allInputs = row.querySelectorAll("input[type=text]");
+            // console.log(allInputs);
+            allInputs.forEach(input => {
+                // console.log(input.value);
+                input.disabled = false
+
+            })
+        })
+    })
+
+
+
+
+
+    function savedata() {
+        const saveme = document.getElementById("save")
+        const new_load = [];
+        saveme.addEventListener('click', async () => {
+            const row = saveme.parentNode;
+            const allInputs = row.querySelectorAll("input[type=text]");
+            // console.log(allInputs);
+            allInputs.forEach(input => {
+                // console.log(input.value);
+                new_load.push(input.value);
+            })
+            console.log(new_load);
+           
+
+
+            const save_req = await fetch(`http://localhost:5003/save`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    data: new_load
+
+                })
+
+            });
+            var resSave = await save_req.json();
+            // console.log(resSave);
+
+            if (resSave) {
+                alert("Your Data is Stored Successfully ")
+                location.reload(true);
+
+            }
+            // console.log(new_load);
+        })
+    }
+
+
+
+
+    function saveAll() {
+        const add_row = document.querySelectorAll('#save');
+        console.log(add_row);
+        const Save_all = document.getElementById('SaveAll')
+        var arr_n = [];
+        Save_all.addEventListener('click', async () => {
+            add_row.forEach(ele => {
+                var arr = new Array();
+                const rows = ele.parentNode
+                const allInputs = rows.querySelectorAll("input[type=text]");
+                allInputs.forEach(input => {
+                    // console.log(input.value);
+                    arr.push(input.value);
+                })
+                arr_n.push(arr);
+            })
+            console.log(arr_n);
+            let msg = confirm("Do you want to Save all Inserted data ?");
+
+            if (msg && arr_n) {
+                const save_req = await fetch(`http://localhost:5003/saveall`, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        data: arr_n
+
+                    })
+
+                });
+
+            }
+
+            var resSave = await save_req.json();
+                console.log(resSave);
+
+                if (resSave) {
+                    alert("Your Data is Updated Successfully ")
+                    location.reload(true)
+                }
+
+        })
     }
 
 
