@@ -99,11 +99,11 @@ app.post('/saveall', (req, res) => {
        
        console.log(id,fname,lname,city ,acc_no,addr);
         
-       let inser_que = `Insert INTO Task(id,fname,lname,city,account_no,addhar_no) values (${id},'${fname}','${lname}','${city}','${acc_no}','${addr}');`
+       let inser_que = `Insert INTO Task(fname,lname,city,account_no,addhar_no) values ('${fname}','${lname}','${city}','${acc_no}','${addr}');`
        conn.query(inser_que, (err, ans) => {
         if (err) return console.log(err.message);
-        res.json({ ans })
     })
+    res.json({ ans })
     }
 
 

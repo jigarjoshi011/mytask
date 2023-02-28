@@ -156,22 +156,28 @@
 
 
     }
-
+    const arrofIDs=[]
+    let n=0;
     async function addRow() {
         console.log("he bab");
-        // const response = await fetch('/getId');
-        // const data = await response.json();
-        // console.log(data);
-        // const id = data.ans[0].id + 1;
-        let id = 0
+        const response = await fetch('/getId');
+        const data = await response.json();
+        console.log(data);
+        let id = data.ans[0].id + 1;
+        
+        arrofIDs.push(id+n)
+       n++;
+        console.log(arrofIDs);
+        let di=0
+        // let id = 0
         // console.log("i got data");
         let content = `
-                    <td><input type="text"  name="id${++id}" id="input1" readonly></td>
-                    <td><input type="text" name="first_name${id}" id="input1"></td>
-                    <td><input type="text" name="last_name${id}" id="input2"></td>
-                    <td><input type="text" name="city${id}" id="input3"></td>
-                    <td><input type="text" name="A/c_no${id}" id="input4"></td>
-                    <td><input type="text" name="addhar_no${id}" id="input5"></td>
+                    <td><input type="text"  name="id${++di}" id="input1" readonly></td>
+                    <td><input type="text" name="first_name${di}" id="input1"></td>
+                    <td><input type="text" name="last_name${di}" id="input2"></td>
+                    <td><input type="text" name="city${di}" id="input3"></td>
+                    <td><input type="text" name="A/c_no${di}" id="input4"></td>
+                    <td><input type="text" name="addhar_no${di}" id="input5"></td>
                     <p class="btn btn-success" class="savedata" id="save" onclick="savedata()">save</p>`;
 
         const div = document.createElement('tr');
@@ -256,7 +262,7 @@
                 const rows = ele.parentNode
                 const allInputs = rows.querySelectorAll("input[type=text]");
                 allInputs.forEach(input => {
-                    // console.log(input.value);
+                    console.log(input.value);
                     arr.push(input.value);
                 })
                 arr_n.push(arr);
